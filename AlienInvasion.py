@@ -22,8 +22,9 @@ class AlienInvasion:
         self.bg_color = (225, 225, 225)
     def _fire_bullet(self):
         """Create A New Bullet And Add It To The Bullets Group"""
-        new_bullet = Bullet(self)
-        self.Bullets.add(new_bullet)
+        if len(self.Bullets) < self.Settings.bullets_allowed:
+            new_bullet = Bullet(self)
+            self.Bullets.add(new_bullet)
     def _check_events(self):
         #Respond To Keyboard And Mouse Events
         for event in pygame.event.get():
