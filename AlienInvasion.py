@@ -44,6 +44,14 @@ class AlienInvasion:
                     self.Ship.moving_right = False
                 elif event.key == pygame.K_LEFT:
                     self.Ship.moving_left = False
+    def _update_bullets(self):
+        """Update Position of Bullets And Get Rid of The Old Bullets"""
+        #Update Bullet Positions
+        self.Bullets.update()
+        #Get Rid of Bullets That Have Disappeared
+        for bullet in self.Bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.Bullets.remove(bullet)
     def _update_screen(self):
         """Update Images on The Screen, And Flip To The New Screen"""
         self.screen.fill(self.Settings.bg_color)
@@ -56,11 +64,7 @@ class AlienInvasion:
         while True:
             self._check_events()
             self.Ship.update()
-            self.Bullets.update()
-            #Get Rid of Bullets That Have Disappeared
-            for bullet in self.Bullets.copy():
-                if bullet.rect.bottom <= 0:
-                    self.Bullets.remove(bullet)
+            self._update_bullets()
             print(len(self.Bullets))
             self._update_screen()
             self.clock.tick(60)
