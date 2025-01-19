@@ -46,7 +46,7 @@ class AlienInvasion:
     def _update_screen(self):
         """Update Images on The Screen, And Flip To The New Screen"""
         self.screen.fill(self.Settings.bg_color)
-        for bullet in self.bullets.sprites():
+        for bullet in self.Bullets.sprites():
             bullet.draw_bullet()
         self.Ship.blitme()
         pygame.display.flip()
@@ -56,6 +56,11 @@ class AlienInvasion:
             self._check_events()
             self.Ship.update()
             self.Bullets.update()
+            #Get Rid of Bullets That Have Disappeared
+            for bullet in self.Bullets.copy():
+                if bullet.rect.bottom <= 0:
+                    self.Bullets.remove(bullet)
+            print(len(self.Bullets))
             self._update_screen()
             self.clock.tick(60)
 if __name__ == '__main__':
