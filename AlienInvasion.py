@@ -3,6 +3,7 @@ import pygame
 
 from Settings import Settings
 from Ship import Ship
+from Bullet import Bullet
 
 class AlienInvasion:
     """OverAll Class To Manage Game Assets And Behaviour"""
@@ -16,6 +17,7 @@ class AlienInvasion:
         self.Settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption(("Alien Invasion"))
         self.Ship = Ship(self)
+        self.Bullets = pygame.sprite.Group()
         #Set The Background Colour
         self.bg_color = (225, 225, 225)
     def _check_events(self):
@@ -45,6 +47,7 @@ class AlienInvasion:
         while True:
             self._check_events()
             self.Ship.update()
+            self.Bullets.update()
             self._update_screen()
             self.clock.tick(60)
 if __name__ == '__main__':
