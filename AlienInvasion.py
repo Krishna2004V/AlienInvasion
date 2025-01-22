@@ -21,22 +21,28 @@ class AlienInvasion:
         self.Bullets = pygame.sprite.Group()
         self.Aliens = pygame.sprite.Group()
         self._create_fleet()
-    def _create_alien(self, x_position):
+    def _create_alien(self, x_position, y_position):
         """Create An Alien And Place It in The Row"""
         new_alien = Alien(self)
         new_alien.x = x_position
         new_alien.rect.x = x_position
+        new_alien.rect.y = y_position
         self.Aliens.add(new_alien)
     def _create_fleet(self):
         """Create The Fleet of Aliens"""
         #Create An Alien And Keep Adding Aliens Until There's No Room Left
-        #Spacing Between Aliens is One Alien Width
+        #Spacing Between Aliens is One Alien Width And One Alien Height
         alien = Alien(self)
-        alien_width = alien.rect.width
-        current_x = alien_width
-        while current_x < (self.Settings.screen_width - 2 * alien_width):
-            self._create_alien(current_x)
-            current_x += 2 * alien_width
+        alien_width, alien_height = alien.rect.size
+        current_x, current_y = alien_width, alien_height
+        while current_y < (self.Settings.screen_height - 3 * alien_height):
+            while current_x < (self.Settings.screen_width - 2 * alien_width):
+                self._create_alien(current_x, current_y)
+                current_x += 2 * alien_width
+            #Finished A Row
+            #Reset The Value of X And Increment The Value of Y
+            current_x = alien_width
+            current_y += 2 * alien_height
         #Set The Background Colour
         self.bg_color = (225, 225, 225)
     def _fire_bullet(self):
