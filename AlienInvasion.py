@@ -45,6 +45,9 @@ class AlienInvasion:
             current_y += 2 * alien_height
         #Set The Background Colour
         self.bg_color = (225, 225, 225)
+    def _update_aliens(self):
+        """Update The Positions of All Aliens in The Fleet"""
+        self.Aliens.update()
     def _fire_bullet(self):
         """Create A New Bullet And Add It To The Bullets Group"""
         if len(self.Bullets) < self.Settings.bullets_allowed:
@@ -91,7 +94,7 @@ class AlienInvasion:
             self._check_events()
             self.Ship.update()
             self._update_bullets()
-            print(len(self.Bullets))
+            self._update_aliens()
             self._update_screen()
             self.clock.tick(60)
 if __name__ == '__main__':
