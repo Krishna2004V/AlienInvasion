@@ -46,7 +46,8 @@ class AlienInvasion:
         #Set The Background Colour
         self.bg_color = (225, 225, 225)
     def _update_aliens(self):
-        """Update The Positions of All Aliens in The Fleet"""
+        """Check If The Fleet is At An Edge And Then Update The Positions"""
+        self._check_fleet_edges()
         self.Aliens.update()
     def _fire_bullet(self):
         """Create A New Bullet And Add It To The Bullets Group"""
@@ -80,6 +81,17 @@ class AlienInvasion:
         for bullet in self.Bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.Bullets.remove(bullet)
+    def _check_fleet_edges(self):
+        """Respond Appropriately If Any Aliens Have Reached An Edge"""
+        for Alien in self.Aliens.sprites():
+            if Alien.check_edges():
+                self._change_fleet_direction()
+                break
+    def _change_fleet_direction(self):
+        """Drop The Entire Fleet And Change The Fleet's Direction"""
+        for Alien in self.Aliens.sprites():
+            Alien.rect.y += self.Settings.fleet_drop_speed
+        self.Settings.fleet_direction *= -1
     def _update_screen(self):
         """Update Images on The Screen, And Flip To The New Screen"""
         self.screen.fill(self.Settings.bg_color)
